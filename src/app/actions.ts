@@ -4,6 +4,7 @@ import { categorizeApps as categorizeAppsFlow } from '@/ai/flows/auto-app-catego
 import { getAppSuggestions as getAppSuggestionsFlow } from '@/ai/flows/intelligent-app-suggestions';
 import { getWeatherForecast as getWeatherForecastFlow } from '@/ai/flows/get-weather-forecast';
 import { getDailyBriefing as getDailyBriefingFlow } from '@/ai/flows/daily-briefing';
+import { universalSearch as universalSearchFlow } from '@/ai/flows/universal-search';
 import type {
   CategorizeAppsInput,
   CategorizeAppsOutput,
@@ -12,6 +13,8 @@ import type {
   WeatherForecastInput,
   WeatherForecastOutput,
   DailyBriefingOutput,
+  UniversalSearchInput,
+  UniversalSearchOutput,
 } from '@/ai/types';
 
 export async function categorizeApps(input: CategorizeAppsInput): Promise<CategorizeAppsOutput> {
@@ -28,4 +31,8 @@ export async function getWeatherForecast(input: WeatherForecastInput): Promise<W
 
 export async function getDailyBriefing(): Promise<DailyBriefingOutput> {
   return await getDailyBriefingFlow();
+}
+
+export async function universalSearch(input: UniversalSearchInput): Promise<UniversalSearchOutput> {
+  return await universalSearchFlow(input);
 }

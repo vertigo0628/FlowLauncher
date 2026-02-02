@@ -54,3 +54,24 @@ export const AppSuggestionsOutputSchema = z.object({
   suggestedApps: z.array(z.string()).describe('A list of app names suggested for the user based on their current context.'),
 });
 export type AppSuggestionsOutput = z.infer<typeof AppSuggestionsOutputSchema>;
+
+// from universal-search.ts
+export const UniversalSearchInputSchema = z.object({
+    query: z.string().describe('The user\'s search query.'),
+    installedApps: z.array(z.string()).describe('A list of the names of the apps installed on the device.'),
+    contacts: z.array(z.string()).describe('A list of the names of the user\'s contacts.'),
+});
+export type UniversalSearchInput = z.infer<typeof UniversalSearchInputSchema>;
+
+export const SearchResultItemSchema = z.object({
+    type: z.enum(['app', 'contact', 'web']).describe('The type of search result.'),
+    title: z.string().describe('The main title of the search result.'),
+    icon: z.string().describe('A lucide-react icon name for the result.'),
+    description: z.string().optional().describe('A short description or subtext for the result.'),
+});
+export type SearchResultItem = z.infer<typeof SearchResultItemSchema>;
+
+export const UniversalSearchOutputSchema = z.object({
+    results: z.array(SearchResultItemSchema).describe('A list of search results.'),
+});
+export type UniversalSearchOutput = z.infer<typeof UniversalSearchOutputSchema>;
