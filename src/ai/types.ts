@@ -84,10 +84,11 @@ export const CommandParserInputSchema = z.object({
 export type CommandParserInput = z.infer<typeof CommandParserInputSchema>;
 
 export const CommandParserOutputSchema = z.object({
-  intent: z.enum(['launch_app', 'search', 'open_drawer', 'show_suggestions', 'unrecognized']).describe('The recognized intent of the command.'),
+  intent: z.enum(['launch_app', 'search', 'open_drawer', 'show_suggestions', 'toggle_setting', 'get_briefing', 'unrecognized']).describe('The recognized intent of the command.'),
   entities: z.object({
     appName: z.string().optional().describe('The name of the app to launch, if applicable.'),
     searchQuery: z.string().optional().describe('The query to search for, if applicable.'),
+    settingName: z.string().optional().describe('The name of the setting to toggle (e.g., "dark mode", "wifi").'),
   }).describe('The entities extracted from the command.'),
   response: z.string().describe('A natural language response for the assistant to speak or display.'),
 });

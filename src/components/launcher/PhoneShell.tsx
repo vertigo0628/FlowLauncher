@@ -3,13 +3,25 @@ import { useState, useEffect } from 'react';
 import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 import ThemeToggle from './ThemeToggle';
+import { eventBus } from '@/lib/event-bus';
 
 export default function PhoneShell({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState('light');
 
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
   useEffect(() => {
     const savedTheme = localStorage.getItem('flow-launcher-theme') || 'light';
     setTheme(savedTheme);
+
+    eventBus.on('toggleTheme', toggleTheme);
+
+    return () => {
+      eventBus.off('toggleTheme', toggleTheme);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
   useEffect(() => {
@@ -21,10 +33,6 @@ export default function PhoneShell({ children }: { children: React.ReactNode }) 
     localStorage.setItem('flow-launcher-theme', theme);
   }, [theme]);
 
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-  };
 
   return (
     <div className="relative w-full max-w-[420px] aspect-[9/19] bg-white dark:bg-black rounded-[40px] shadow-2xl border-4 border-gray-800 dark:border-gray-600 overflow-hidden">

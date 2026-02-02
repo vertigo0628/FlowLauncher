@@ -11,6 +11,7 @@ import WeatherWidget from './WeatherWidget';
 import AppIcon from './AppIcon';
 import { AnimatePresence } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
+import { eventBus } from '@/lib/event-bus';
 
 export default function HomeScreen({
   categorizedApps,
@@ -78,6 +79,23 @@ export default function HomeScreen({
         // This could be enhanced to scroll to the suggestions widget
         document.getElementById('suggestions')?.scrollIntoView({ behavior: 'smooth' });
         break;
+      case 'toggle_setting':
+        if (entities.settingName?.includes('dark') || entities.settingName?.includes('light')) {
+            eventBus.emit('toggleTheme');
+        }
+        break;
+      case 'get_briefing':
+        // The assistant's verbal response is handled in VoiceAssistantWidget.
+        // We can optionally highlight the briefing widget here.
+        const briefingWidget = document.getElementById('briefing-widget');
+        if (briefingWidget) {
+            briefingWidget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            briefingWidget.classList.add('animate-pulse');
+            setTimeout(() => {
+                briefingWidget.classList.remove('animate-pulse');
+            }, 2000);
+        }
+        break;
       default:
         break;
     }
@@ -97,7 +115,7 @@ export default function HomeScreen({
     >
       <ClockWidget />
       <WeatherWidget forecast={weatherForecast} isLoading={!weatherForecast} />
-      <div className="flex-grow flex flex-col justify-center">
+      <div id="briefing-widget" className="flex-grow flex flex-col justify-center">
         <BriefingWidget />
       </div>
 
