@@ -3,13 +3,14 @@ import { useState, useRef } from 'react';
 import type { App, CategorizedApps } from '@/lib/types';
 import type { WeatherForecastOutput } from '@/ai/types';
 import BriefingWidget from './BriefingWidget';
-import FlowerMenu from './FlowerMenu';
+import VoiceAssistantWidget from './VoiceAssistantWidget';
 import AppDrawer from './AppDrawer';
 import SearchPanel from './SearchPanel';
 import ClockWidget from './ClockWidget';
 import WeatherWidget from './WeatherWidget';
 import AppIcon from './AppIcon';
 import { AnimatePresence } from 'framer-motion';
+import { useToast } from '@/hooks/use-toast';
 
 export default function HomeScreen({
   categorizedApps,
@@ -24,9 +25,11 @@ export default function HomeScreen({
 }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const touchStartY = useRef(0);
   const touchEndY = useRef(0);
   const MIN_SWIPE_DISTANCE = 50;
+  const { toast } = useToast();
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartY.current = e.targetTouches[0].clientY;
@@ -48,11 +51,41 @@ export default function HomeScreen({
       } else {
         // Swipe Down
         setSearchOpen(true);
+        setSearchQuery('');
       }
     }
     // Reset refs
     touchStartY.current = 0;
     touchEndY.current = 0;
+  };
+
+  const handleAssistantCommand = (intent: string, entities: any) => {
+    switch (intent) {
+      case 'launch_app':
+        toast({
+            title: 'Launching App',
+            description: `Opening ${entities.appName}`,
+        });
+        break;
+      case 'search':
+        setSearchQuery(entities.searchQuery || '');
+        setSearchOpen(true);
+        break;
+      case 'open_drawer':
+        setDrawerOpen(true);
+        break;
+      case 'show_suggestions':
+        // This could be enhanced to scroll to the suggestions widget
+        document.getElementById('suggestions')?.scrollIntoView({ behavior: 'smooth' });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSearchClose = () => {
+    setSearchOpen(false);
+    setSearchQuery('');
   };
 
   return (
@@ -74,14 +107,16 @@ export default function HomeScreen({
             <AppIcon key={app.name} app={app} showName={false} />
           ))}
         </div>
-        <FlowerMenu categorizedApps={categorizedApps} allApps={allApps} />
+        <div className="mt-4">
+            <VoiceAssistantWidget onCommand={handleAssistantCommand} />
+        </div>
       </footer>
 
       <AnimatePresence>
         {drawerOpen && <AppDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} allApps={allApps} />}
       </AnimatePresence>
       <AnimatePresence>
-        {searchOpen && <SearchPanel isOpen={searchOpen} onClose={() => setSearchOpen(false)} allApps={allApps} />}
+        {searchOpen && <SearchPanel isOpen={searchOpen} onClose={handleSearchClose} allApps={allApps} initialQuery={searchQuery} />}
       </AnimatePresence>
     </div>
   );

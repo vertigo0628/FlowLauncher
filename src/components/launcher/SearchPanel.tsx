@@ -32,12 +32,14 @@ export default function SearchPanel({
   isOpen,
   onClose,
   allApps,
+  initialQuery = '',
 }: {
   isOpen: boolean;
   onClose: () => void;
   allApps: App[];
+  initialQuery?: string;
 }) {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(initialQuery);
   const [results, setResults] = useState<UniversalSearchOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 

@@ -75,3 +75,20 @@ export const UniversalSearchOutputSchema = z.object({
     results: z.array(SearchResultItemSchema).describe('A list of search results.'),
 });
 export type UniversalSearchOutput = z.infer<typeof UniversalSearchOutputSchema>;
+
+// from command-parser.ts
+export const CommandParserInputSchema = z.object({
+  command: z.string().describe('The voice command from the user.'),
+  installedApps: z.array(z.string()).describe('A list of the names of the apps installed on the device.'),
+});
+export type CommandParserInput = z.infer<typeof CommandParserInputSchema>;
+
+export const CommandParserOutputSchema = z.object({
+  intent: z.enum(['launch_app', 'search', 'open_drawer', 'show_suggestions', 'unrecognized']).describe('The recognized intent of the command.'),
+  entities: z.object({
+    appName: z.string().optional().describe('The name of the app to launch, if applicable.'),
+    searchQuery: z.string().optional().describe('The query to search for, if applicable.'),
+  }).describe('The entities extracted from the command.'),
+  response: z.string().describe('A natural language response for the assistant to speak or display.'),
+});
+export type CommandParserOutput = z.infer<typeof CommandParserOutputSchema>;
