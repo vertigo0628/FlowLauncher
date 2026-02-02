@@ -22,7 +22,16 @@ Flow Launcher is a web-based prototype designed to simulate an intelligent, AI-p
 -   **Search Panel**: A universal search interface that uses AI to provide results from apps, contacts, and the web.
 -   **Theming**: Supports both light and dark themes, with a manual toggle. The theme is persisted in the browser's local storage.
 
-### 1.3. AI-Powered Features (Genkit Flows)
+### 1.3. UI/UX and Style Guide
+
+-   **Primary Color**: Slate Blue (`hsl(210, 14%, 56%)`). Used for primary interactive elements like the main voice assistant button and the Flower Menu button.
+-   **Background Color**: Light Gray (`#D3D3D3`). Used as the main wallpaper/backdrop for the home screen.
+-   **Accent Color**: Soft Purple (`hsl(255, 38%, 75%)`). Used for the category icons in the Flower Menu.
+-   **Font**: 'Inter' (sans-serif) is used for all body and headline text to maintain a modern and readable interface.
+-   **Component Library**: The UI is built with ShadCN UI, providing a consistent and clean aesthetic for components like buttons, dialogs, and cards.
+-   **Animations**: Framer Motion is used for smooth, subtle animations on UI elements like the clock, voice assistant button, and panel transitions to enhance the user experience.
+
+### 1.4. AI-Powered Features (Genkit Flows)
 
 The application's intelligence is powered by Google's Genkit, which orchestrates calls to Large Language Models (LLMs).
 
@@ -42,7 +51,7 @@ The application's intelligence is powered by Google's Genkit, which orchestrates
     -   **Purpose**: To power the voice assistant by determining user intent from a voice command.
     -   **Mechanism**: This is the core of the voice assistant. It takes the transcribed text from the user's speech and analyzes it to identify an `intent` (e.g., `launch_app`, `toggle_setting`) and any `entities` (e.g., the app name or setting name). It also generates a natural language response.
 
-### 1.4. Technical Stack
+### 1.5. Technical Stack
 
 -   **Framework**: Next.js (React)
 -   **AI**: Google Genkit with a Gemini backend
@@ -51,7 +60,7 @@ The application's intelligence is powered by Google's Genkit, which orchestrates
 -   **Speech Recognition**: `react-speech-recognition` (browser-based)
 -   **Language**: TypeScript
 
-### 1.5. Project Structure
+### 1.6. Project Structure
 
 ```
 .
@@ -77,7 +86,7 @@ The application's intelligence is powered by Google's Genkit, which orchestrates
 
 ## Part 2: Guide to Building a Native Android Version
 
-This guide outlines the process of translating the web prototype into a native Android application using modern, recommended practices.
+This guide outlines the process of translating the web prototype into a native Android application using modern, recommended practices. It is structured to be used as a detailed prompt for a generative AI agent familiar with Android development.
 
 ### 2.1. Foundational Setup
 
