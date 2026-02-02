@@ -8,7 +8,7 @@ import AppDrawer from './AppDrawer';
 import SearchPanel from './SearchPanel';
 import ClockWidget from './ClockWidget';
 import WeatherWidget from './WeatherWidget';
-import AppIcon from './AppIcon';
+import FlowerMenu from './FlowerMenu';
 import { AnimatePresence } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
 import { eventBus } from '@/lib/event-bus';
@@ -16,12 +16,10 @@ import { eventBus } from '@/lib/event-bus';
 export default function HomeScreen({
   categorizedApps,
   allApps,
-  dockApps,
   weatherForecast,
 }: {
   categorizedApps: CategorizedApps;
   allApps: App[];
-  dockApps: App[];
   weatherForecast: WeatherForecastOutput | null;
 }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -120,10 +118,8 @@ export default function HomeScreen({
       </div>
 
       <footer className="pb-8">
-        <div className="flex justify-center items-center gap-4 px-6 h-20 bg-background/50 backdrop-blur-sm">
-          {dockApps.map((app) => (
-            <AppIcon key={app.name} app={app} showName={false} />
-          ))}
+        <div className="flex justify-center items-center px-6 h-20">
+            <FlowerMenu categorizedApps={categorizedApps} allApps={allApps} />
         </div>
         <div className="mt-4">
             <VoiceAssistantWidget onCommand={handleAssistantCommand} />

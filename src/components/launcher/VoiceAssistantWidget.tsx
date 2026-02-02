@@ -1,4 +1,5 @@
 'use client';
+import 'regenerator-runtime/runtime';
 import { useState, useEffect } from 'react';
 import { Mic, MicOff, Loader } from 'lucide-react';
 import { Button } from '@/components/ui/button';

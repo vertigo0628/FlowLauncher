@@ -35,19 +35,12 @@ export default async function Home() {
     console.error("Failed to get weather forecast:", error);
   }
 
-  const dockAppNames = ['Messages', 'Mail', 'Camera', 'Settings'];
-  const dockApps: App[] = dockAppNames
-    .map((name) => INSTALLED_APPS.find((app) => app.name === name))
-    .filter((app): app is App => !!app);
-
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-[#D3D3D3] p-4 font-body antialiased dark:bg-neutral-900">
       <PhoneShell>
         <HomeScreen
           categorizedApps={categorizedApps}
           allApps={ALL_APPS_SORTED}
-          dockApps={dockApps}
           weatherForecast={weatherForecast}
         />
       </PhoneShell>
