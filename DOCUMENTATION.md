@@ -1,7 +1,8 @@
 
 # Flow Launcher - Project Documentation
 
-This document provides a detailed overview of the Flow Launcher web application prototype and a comprehensive guide on how to migrate it to a native Android application using Kotlin and Jetpack Compose.
+ThThis document provides a detailed overview of the Flow Launcher web application prototype and a comprehensive guide on how to migrate it to a native Android application using Kotlin and Jetpack Compose.
+is document provides a detailed overview of the Flow Launcher web application prototype and a comprehensive guide on how to migrate it to a native Android application using Kotlin and Jetpack Compose.
 
 ---
 
