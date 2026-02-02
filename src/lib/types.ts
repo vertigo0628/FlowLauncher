@@ -1,8 +1,6 @@
-import type { LucideIcon } from 'lucide-react';
-
 export type App = {
   name: string;
-  icon: LucideIcon;
+  icon: string;
 };
 
 export type CategorizedApps = {

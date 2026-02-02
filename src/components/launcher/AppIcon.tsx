@@ -1,6 +1,7 @@
 import type { App } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import * as LucideIcons from 'lucide-react';
 
 type AppIconProps = {
   app: App;
@@ -9,7 +10,7 @@ type AppIconProps = {
 };
 
 export default function AppIcon({ app, showName = true, className }: AppIconProps) {
-  const Icon = app.icon;
+  const Icon = (LucideIcons as any)[app.icon] || LucideIcons.AppWindow;
   return (
     <motion.div
       whileTap={{ scale: 0.9 }}

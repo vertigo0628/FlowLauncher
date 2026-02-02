@@ -1,11 +1,13 @@
 'use client';
 import { useState, useRef } from 'react';
 import type { App, CategorizedApps } from '@/lib/types';
+import type { WeatherForecastOutput } from '@/ai/flows/get-weather-forecast';
 import AppSuggestions from './AppSuggestions';
 import FlowerMenu from './FlowerMenu';
 import AppDrawer from './AppDrawer';
 import SearchPanel from './SearchPanel';
 import ClockWidget from './ClockWidget';
+import WeatherWidget from './WeatherWidget';
 import AppIcon from './AppIcon';
 import { AnimatePresence } from 'framer-motion';
 
@@ -13,10 +15,12 @@ export default function HomeScreen({
   categorizedApps,
   allApps,
   dockApps,
+  weatherForecast,
 }: {
   categorizedApps: CategorizedApps;
   allApps: App[];
   dockApps: App[];
+  weatherForecast: WeatherForecastOutput | null;
 }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -59,6 +63,7 @@ export default function HomeScreen({
       onTouchEnd={handleTouchEnd}
     >
       <ClockWidget />
+      <WeatherWidget forecast={weatherForecast} isLoading={!weatherForecast} />
       <div className="flex-grow flex flex-col justify-center">
         <AppSuggestions />
       </div>

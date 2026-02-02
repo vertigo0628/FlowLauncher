@@ -16,7 +16,14 @@ const CategorizeAppsInputSchema = z.object({
 });
 export type CategorizeAppsInput = z.infer<typeof CategorizeAppsInputSchema>;
 
-const CategorizeAppsOutputSchema = z.record(z.string(), z.string()).describe('A map of application names to categories.');
+const AppCategoryPairSchema = z.object({
+  appName: z.string().describe('The name of the application.'),
+  category: z.string().describe('The category of the application (Social, Media, Games, Productivity, Utilities, or Other).'),
+});
+
+const CategorizeAppsOutputSchema = z.object({
+  categorizations: z.array(AppCategoryPairSchema).describe('A list of app names and their corresponding categories.'),
+});
 export type CategorizeAppsOutput = z.infer<typeof CategorizeAppsOutputSchema>;
 
 export async function categorizeApps(input: CategorizeAppsInput): Promise<CategorizeAppsOutput> {
@@ -29,7 +36,7 @@ const categorizeAppsPrompt = ai.definePrompt({
   output: {schema: CategorizeAppsOutputSchema},
   prompt: `You are an expert app classifier. Given a list of app names, you will classify each app into one of the following categories: Social, Media, Games, Productivity, Utilities, or Other.
 
-  Return a JSON object where the keys are the app names and the values are the categories.
+  Return a JSON object with a single key "categorizations", which is an array of objects. Each object in the array should have two keys: "appName" (the name of the app) and "category" (the assigned category).
 
   Here are the apps to categorize:
   {{#each appNames}}
