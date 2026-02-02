@@ -4,25 +4,15 @@
  * @fileOverview Provides intelligent app suggestions based on usage patterns, time of day, and location.
  *
  * - `getAppSuggestions` - A function that returns a list of suggested apps.
- * - `AppSuggestionsInput` - The input type for the `getAppSuggestions` function.
- * - `AppSuggestionsOutput` - The return type for the `getAppSuggestions` function.
  */
 
 import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
-
-const AppSuggestionsInputSchema = z.object({
-  timeOfDay: z.string().describe('The current time of day (e.g., morning, afternoon, evening, night).'),
-  location: z.string().describe('The user\u0027s current location (e.g., home, work, commuting).'),
-  usagePatterns: z.string().describe('A description of the user\u0027s recent app usage patterns.'),
-  installedApps: z.array(z.string()).describe('A list of the names of the apps installed on the device.'),
-});
-export type AppSuggestionsInput = z.infer<typeof AppSuggestionsInputSchema>;
-
-const AppSuggestionsOutputSchema = z.object({
-  suggestedApps: z.array(z.string()).describe('A list of app names suggested for the user based on their current context.'),
-});
-export type AppSuggestionsOutput = z.infer<typeof AppSuggestionsOutputSchema>;
+import {
+  AppSuggestionsInput,
+  AppSuggestionsInputSchema,
+  AppSuggestionsOutput,
+  AppSuggestionsOutputSchema,
+} from '@/ai/types';
 
 export async function getAppSuggestions(input: AppSuggestionsInput): Promise<AppSuggestionsOutput> {
   return appSuggestionsFlow(input);

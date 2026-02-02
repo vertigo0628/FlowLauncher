@@ -1,8 +1,8 @@
 'use client';
 import { useState, useRef } from 'react';
 import type { App, CategorizedApps } from '@/lib/types';
-import type { WeatherForecastOutput } from '@/ai/flows/get-weather-forecast';
-import AppSuggestions from './AppSuggestions';
+import type { WeatherForecastOutput } from '@/ai/types';
+import BriefingWidget from './BriefingWidget';
 import FlowerMenu from './FlowerMenu';
 import AppDrawer from './AppDrawer';
 import SearchPanel from './SearchPanel';
@@ -65,7 +65,7 @@ export default function HomeScreen({
       <ClockWidget />
       <WeatherWidget forecast={weatherForecast} isLoading={!weatherForecast} />
       <div className="flex-grow flex flex-col justify-center">
-        <AppSuggestions />
+        <BriefingWidget />
       </div>
 
       <footer className="pb-8">
@@ -81,7 +81,7 @@ export default function HomeScreen({
         {drawerOpen && <AppDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} allApps={allApps} />}
       </AnimatePresence>
       <AnimatePresence>
-        {searchOpen && <SearchPanel isOpen={searchOpen} onClose={() => setSearchOpen(false)} />}
+        {searchOpen && <SearchPanel isOpen={searchOpen} onClose={() => setSearchOpen(false)} allApps={allApps} />}
       </AnimatePresence>
     </div>
   );

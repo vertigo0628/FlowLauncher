@@ -3,7 +3,7 @@ import { ALL_APPS_SORTED, INSTALLED_APPS } from '@/lib/apps';
 import type { App } from '@/lib/types';
 import HomeScreen from '@/components/launcher/HomeScreen';
 import PhoneShell from '@/components/launcher/PhoneShell';
-import type { WeatherForecastOutput } from '@/ai/flows/get-weather-forecast';
+import type { WeatherForecastOutput } from '@/ai/types';
 
 export default async function Home() {
   const appNames = INSTALLED_APPS.map((app) => app.name);

@@ -1,7 +1,7 @@
 'use client';
 
 import * as LucideIcons from 'lucide-react';
-import type { WeatherForecastOutput } from '@/ai/flows/get-weather-forecast';
+import type { WeatherForecastOutput } from '@/ai/types';
 import { Skeleton } from '@/components/ui/skeleton';
 
 type WeatherWidgetProps = {
