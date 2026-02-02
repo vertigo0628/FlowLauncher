@@ -12,6 +12,7 @@ import FlowerMenu from './FlowerMenu';
 import { AnimatePresence } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
 import { eventBus } from '@/lib/event-bus';
+import AppSuggestions from './AppSuggestions';
 
 export default function HomeScreen({
   categorizedApps,
@@ -111,13 +112,21 @@ export default function HomeScreen({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      <ClockWidget />
-      <WeatherWidget forecast={weatherForecast} isLoading={!weatherForecast} />
-      <div id="briefing-widget" className="flex-grow flex flex-col justify-center">
-        <BriefingWidget />
+      <div className="flex-shrink-0">
+        <ClockWidget />
+        <WeatherWidget forecast={weatherForecast} isLoading={!weatherForecast} />
+      </div>
+      
+      <div className="flex-1 overflow-y-auto pb-4">
+        <div id="briefing-widget">
+          <BriefingWidget />
+        </div>
+        <div id="suggestions">
+          <AppSuggestions />
+        </div>
       </div>
 
-      <footer className="pb-8">
+      <footer className="pb-8 pt-2 flex-shrink-0">
         <div className="flex justify-center items-center px-6 h-20">
             <FlowerMenu categorizedApps={categorizedApps} allApps={allApps} />
         </div>
