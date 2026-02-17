@@ -1,30 +1,51 @@
-# 📘 Design Review: FlowLauncher
+# 📱 Preliminary Design Review (PDR): FlowLauncher (Android)
 
-> **Project Name:** FlowLauncher (vertigo0628)  
-> **Platform:** Android
-> 
-> **Core Framework:** Kotlin
-> **Review Status:** System Architecture Baseline  
+> **Project Name:** FlowLauncher Mobile  
+> **Platform:** Android OS  
+> **Core Framework:** Kotlin / Java  
+> **Review Status:** Mobile Architecture Baseline  
 
 ---
 
 ## 1. Project Mission
-FlowLauncher is a keystroke-driven productivity interface designed to replace the native Windows Start Menu. It serves as a central command center that aggregates local file search, system commands, and web API queries into a unified query bar.
+FlowLauncher for Android is a minimal, performance-first app launcher designed to replace the cluttered home screen. It focuses on a "Search-First" user experience, allowing users to launch apps, contacts, and web queries through a unified text input.
 
-* **Primary Goal:** Minimize user time-to-action via keyboard-centric workflows.
-* **UX Paradigm:** "Type-to-act" (Input $\rightarrow$ Query $\rightarrow$ Execution).
-* **Extensibility:** Modular architecture allowing third-party integration via plugins.
+* **Primary Goal:** Sub-second app indexing and launch.
+* **UX Paradigm:** Minimalist list-view with a persistent keyboard focus.
+* **Extensibility:** Support for custom "Search Providers" and shortcut actions.
 
 ---
 
 ## 2. System Architecture
-The application operates as a **host kernel** that loads isolated plugin assemblies.
+The app operates as a high-priority **Home Activity** that interfaces directly with the Android `LauncherApps` and `PackageManager` APIs.
 
-```mermaid
-graph TD
-    Host[FlowLauncher Kernel (WPF)] -->|IPC/JSON-RPC| Plugins[Plugin Manager]
-    Plugins --> Py[Python Plugins]
-    Plugins --> CS[C# / .NET Plugins]
-    Host --> Index[Search Indexer]
-    Index <--> FileSys[NTFS / Everything SDK]
-    Host --> UI[WPF Presentation Layer]
+
+
+### Component Breakdown
+* **UI Layer:** A lightweight `RecyclerView` or `Compose` list that renders search results in real-time.
+* **Search Engine:** A local filtering engine that uses fuzzy matching (Prefix or Levenshtein) to sort apps by usage and relevance.
+* **Provider System:** Modular logic blocks that fetch data from different sources (Apps, Contacts, Web, System Settings).
+
+---
+
+## 3. Technical Requirements Mapping
+
+| Requirement | Status | Implementation |
+| :--- | :--- | :--- |
+| **App Querying** | ✅ ACTIVE | `PackageManager.queryIntentActivities()` |
+| **Fuzzy Matching** | ✅ ACTIVE | Kotlin-based string filtering logic |
+| **Custom Themes** | 🟡 IN PROGRESS | Material 3 / Dynamic Color support |
+| **Usage Ranking** | 🟡 IN PROGRESS | Local SQLite/Room DB for frequency tracking |
+| **Widget Support** | 🔴 PLANNING | `AppWidgetHost` integration |
+
+---
+
+## 4. Interface Control (Provider Contract)
+To add new search sources, the system uses a standard `SearchProvider` interface:
+
+```kotlin
+interface SearchProvider {
+    val id: String
+    fun getResults(query: String): List<SearchResult>
+    fun onResultClick(result: SearchResult)
+}
