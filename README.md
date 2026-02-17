@@ -1,7 +1,7 @@
 # 📘 Design Review: FlowLauncher
 
 > **Project Name:** FlowLauncher (vertigo0628)  
-> **Platform:** Windows Desktop (WPF)  
+> **Platform:** Android
 > **Core Framework:** .NET Core / C#  
 > **Review Status:** System Architecture Baseline  
 
