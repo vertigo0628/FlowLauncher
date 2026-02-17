@@ -1,8 +1,8 @@
 # 📘 Design Review: FlowLauncher
 
 > **Project Name:** FlowLauncher (vertigo0628)  
-> **Platform:** Android
-> **Core Framework:** .NET Core / C#  
+> **Platform:**        Android
+> **Core Framework:** Kotlin
 > **Review Status:** System Architecture Baseline  
 
 ---
